@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Bonne et heureuse Année 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  height:100vh;
+  font-family:'Quicksand',sans-serif;
+  background:radial-gradient(circle at bottom,#020111,#0a1b3d);
+  overflow:hidden;
+  color:silver;
+}
+
+/* étoiles */
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:gold;
+  border-radius:50%;
+  opacity:.8;
+  animation:twinkle 2s infinite alternate;
+}
+@keyframes twinkle{from{opacity:.2}to{opacity:1}}
+
+/* feux d'artifice */
+.firework{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  animation:explode 1.4s ease-out forwards;
+}
+@keyframes explode{
+  to{
+    transform:scale(6) translate(var(--x),var(--y));
+    opacity:0;
+  }
+}
+
+/* écran */
+.screen{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  transition:.8s;
+}
+
+/* accueil */
+#welcome h1{
+  font-family:'Lobster',cursive;
+  font-size:3em;
+  color:#ffd700;
+  text-shadow:0 0 20px #ff69b4;
+}
+.clock{
+  margin-top:10px;
+  font-size:1.6em;
+  letter-spacing:3px;
+}
+.gifts{
+  font-size:3em;
+  margin:20px;
+}
+button{
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background:#ffd700;
+  font-size:1.1em;
+  cursor:pointer;
+}
+
+/* voeux */
+#wish{
+  opacity:0;
+  pointer-events:none;
+}
+input{
+  padding:12px;
+  border-radius:20px;
+  border:none;
+  width:80%;
+  max-width:300px;
+  font-size:1.1em;
+  text-align:center;
+  margin:15px 0;
+}
+.message{
+  max-width:400px;
+  text-align:center;
+  line-height:1.6em;
+}
+.signature{
+  margin-top:20px;
+  font-family:'Lobster',cursive;
+  font-size:1.4em;
+  color:#ffd700;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ACCUEIL -->
+<div class="screen" id="welcome">
+  <h1>✨ Bonne Année 2026 ✨</h1>
+  <div class="clock">00 h 00 min</div>
+  <div class="gifts">🎁 🎆 🎁</div>
+  <button onclick="go()">Entrer</button>
+</div>
+
+<!-- VOEUX -->
+<div class="screen" id="wish">
+  <h1>🎉 Félicitations ! 🎉</h1>
+  <input id="name" placeholder="Écris ton nom">
+  <div class="message" id="msg">
+    Que cette nouvelle année t’apporte santé, prospérité,
+    bonheur, réussite et paix et si tu es un interne, les bonnes grâces du fondé.
+  </div>
+  <div class="signature">— De la part de Sedjro</div>
+</div>
+
+<script>
+// étoiles
+for(let i=0;i<80;i++){
+  const s=document.createElement("div");
+  s.className="star";
+  s.style.left=Math.random()*100+"%";
+  s.style.top=Math.random()*100+"%";
+  s.style.animationDelay=Math.random()*2+"s";
+  document.body.appendChild(s);
+}
+
+// feux d'artifice
+setInterval(()=>{
+  const f=document.createElement("div");
+  f.className="firework";
+  const colors=["#ff004c","#00ffd5","#ffd700","#9d00ff"];
+  f.style.background=colors[Math.floor(Math.random()*colors.length)];
+  f.style.left=Math.random()*innerWidth+"px";
+  f.style.top=Math.random()*innerHeight+"px";
+  f.style.setProperty("--x",(Math.random()-0.5)*300+"px");
+  f.style.setProperty("--y",(Math.random()-0.5)*300+"px");
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),1400);
+},300);
+
+// transition
+function go(){
+  welcome.style.opacity=0;
+  setTimeout(()=>{
+    welcome.style.display="none";
+    wish.style.opacity=1;
+    wish.style.pointerEvents="auto";
+  },800);
+}
+
+// personnalisation
+document.getElementById("name").addEventListener("input",e=>{
+  msg.innerHTML=`<b>${e.target.value || "Cher ami"}</b>,<br>
+  que 2026 illumine ta vie de joie,
+  de succès et d’amour.<br>
+  Excellente année à toi !`;
+});
+</script>
+
+</body>
+</html>
